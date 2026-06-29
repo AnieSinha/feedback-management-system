@@ -35,6 +35,8 @@ public class SecurityConfig {
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/faculty/**").hasRole("ADMIN")
                 .requestMatchers("/skills/**").hasRole("ADMIN")
+                .requestMatchers("/course/**").authenticated()
+                .requestMatchers("/training-programs/**").authenticated()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session
