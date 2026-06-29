@@ -1,5 +1,6 @@
 com/feedback/exception/ResourceNotFoundException.class
 com/feedback/security/CustomUserDetailsService.class
+com/feedback/controller/FacultyController.class
 com/feedback/model/Faculty.class
 com/feedback/repository/SkillRepository.class
 com/feedback/model/User$UserBuilder.class
@@ -12,9 +13,11 @@ com/feedback/exception/EmailAlreadyExistsException.class
 com/feedback/model/Skill.class
 com/feedback/repository/UserRepository.class
 com/feedback/repository/FacultyRepository.class
+com/feedback/service/FacultyService.class
 com/feedback/FeedbackManagementApplication.class
 com/feedback/exception/GlobalExceptionHandler.class
 com/feedback/model/Skill$SkillBuilder.class
+com/feedback/dto/FacultyRequest.class
 com/feedback/security/JwtService.class
 com/feedback/controller/AuthController.class
 com/feedback/dto/LoginRequest.class

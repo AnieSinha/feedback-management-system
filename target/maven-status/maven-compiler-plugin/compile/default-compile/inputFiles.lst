@@ -1,7 +1,9 @@
 /Users/aniesinha/feedback-management-system/src/main/java/com/feedback/FeedbackManagementApplication.java
 /Users/aniesinha/feedback-management-system/src/main/java/com/feedback/config/SecurityConfig.java
 /Users/aniesinha/feedback-management-system/src/main/java/com/feedback/controller/AuthController.java
+/Users/aniesinha/feedback-management-system/src/main/java/com/feedback/controller/FacultyController.java
 /Users/aniesinha/feedback-management-system/src/main/java/com/feedback/dto/AuthResponse.java
+/Users/aniesinha/feedback-management-system/src/main/java/com/feedback/dto/FacultyRequest.java
 /Users/aniesinha/feedback-management-system/src/main/java/com/feedback/dto/LoginRequest.java
 /Users/aniesinha/feedback-management-system/src/main/java/com/feedback/dto/RegisterRequest.java
 /Users/aniesinha/feedback-management-system/src/main/java/com/feedback/exception/EmailAlreadyExistsException.java
@@ -18,3 +20,4 @@
 /Users/aniesinha/feedback-management-system/src/main/java/com/feedback/security/JwtAuthenticationFilter.java
 /Users/aniesinha/feedback-management-system/src/main/java/com/feedback/security/JwtService.java
 /Users/aniesinha/feedback-management-system/src/main/java/com/feedback/service/AuthService.java
+/Users/aniesinha/feedback-management-system/src/main/java/com/feedback/service/FacultyService.java
