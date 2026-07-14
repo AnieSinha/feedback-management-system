@@ -68,6 +68,18 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--
+			Embedded MongoDB, test scope only. Its auto-configuration activates on mere
+			classpath presence and then fails startup unless
+			`de.flapdoodle.mongodb.embedded.version` is set, so keeping it off the runtime
+			classpath is what lets the jar boot against a real MongoDB.
+		-->
+		<dependency>
+			<groupId>de.flapdoodle.embed</groupId>
+			<artifactId>de.flapdoodle.embed.mongo.spring3x</artifactId>
+			<version>4.20.0</version>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- JWT -->
 		<dependency>

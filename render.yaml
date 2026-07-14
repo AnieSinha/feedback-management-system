@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: feedback-management
+    runtime: docker
+    plan: free
+    region: singapore
+    healthCheckPath: /
+    envVars:
+      # Set in the Render dashboard — never commit these.
+      # MONGODB_URI must include the database name, e.g. .../feedback_db?retryWrites=true&w=majority
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      # Seeds demo users/courses on first boot. The seeder skips any database that already has users.
+      - key: SEED_DEMO_DATA
+        value: "true"

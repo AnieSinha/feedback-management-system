@@ -29,3 +29,7 @@ target/
 # IDE files
 .idea/
 *.iml
+
+# Local secrets — Atlas credentials, JWT secret
+src/main/resources/application-local.properties
+.env

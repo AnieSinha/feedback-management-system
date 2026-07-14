@@ -32,11 +32,16 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
+                // Static SPA shell. The API behind it stays fully authenticated.
+                .requestMatchers("/", "/index.html", "/css/**", "/js/**", "/favicon.svg", "/error").permitAll()
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/faculty/**").hasRole("ADMIN")
                 .requestMatchers("/skills/**").hasRole("ADMIN")
                 .requestMatchers("/course/**").authenticated()
                 .requestMatchers("/training-programs/**").authenticated()
+                .requestMatchers("/feedback/**").authenticated()
+                .requestMatchers("/reports/**").authenticated()
+                .requestMatchers("/users/**").authenticated()
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

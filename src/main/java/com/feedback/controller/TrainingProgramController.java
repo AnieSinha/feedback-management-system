@@ -55,6 +55,24 @@ public class TrainingProgramController {
         return ResponseEntity.ok(trainingProgramService.getProgramsByCoordinator(coordinatorId));
     }
 
+    // US-017: Enroll a participant, making them accountable for feedback
+    @PostMapping("/{id}/participants/{participantId}")
+    @PreAuthorize("hasAnyRole('COORDINATOR', 'ADMIN')")
+    public ResponseEntity<TrainingProgram> enrollParticipant(
+            @PathVariable String id,
+            @PathVariable String participantId) {
+        return ResponseEntity.ok(trainingProgramService.enrollParticipant(id, participantId));
+    }
+
+    // US-017: Remove a participant from a program — COORDINATOR or ADMIN
+    @DeleteMapping("/{id}/participants/{participantId}")
+    @PreAuthorize("hasAnyRole('COORDINATOR', 'ADMIN')")
+    public ResponseEntity<TrainingProgram> unenrollParticipant(
+            @PathVariable String id,
+            @PathVariable String participantId) {
+        return ResponseEntity.ok(trainingProgramService.unenrollParticipant(id, participantId));
+    }
+
     // US-012: Modify Training Program — COORDINATOR or ADMIN
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('COORDINATOR', 'ADMIN')")

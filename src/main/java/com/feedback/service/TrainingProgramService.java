@@ -2,11 +2,15 @@ package com.feedback.service;
 
 import com.feedback.dto.TrainingProgramRequest;
 import com.feedback.exception.ResourceNotFoundException;
+import com.feedback.model.Role;
 import com.feedback.model.TrainingProgram;
+import com.feedback.model.User;
 import com.feedback.repository.TrainingProgramRepository;
+import com.feedback.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,6 +18,7 @@ import java.util.List;
 public class TrainingProgramService {
 
     private final TrainingProgramRepository trainingProgramRepository;
+    private final UserRepository userRepository;
 
     // US-011: Create Training Program
     public TrainingProgram createProgram(TrainingProgramRequest request) {
@@ -25,6 +30,7 @@ public class TrainingProgramService {
                 .endDate(request.getEndDate())
                 .maxParticipants(request.getMaxParticipants())
                 .status(request.getStatus() != null ? request.getStatus() : "UPCOMING")
+                .participantIds(new ArrayList<>())
                 .build();
 
         return trainingProgramRepository.save(program);
@@ -59,6 +65,46 @@ public class TrainingProgramService {
         program.setMaxParticipants(request.getMaxParticipants());
         if (request.getStatus() != null) {
             program.setStatus(request.getStatus());
+        }
+
+        return trainingProgramRepository.save(program);
+    }
+
+    // US-017: Enroll a participant so they can be tracked in the defaulters report
+    public TrainingProgram enrollParticipant(String programId, String participantId) {
+        TrainingProgram program = getProgramById(programId);
+
+        User participant = userRepository.findById(participantId)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + participantId));
+
+        if (participant.getRole() != Role.PARTICIPANT) {
+            throw new IllegalArgumentException("User " + participantId + " is not a participant");
+        }
+
+        if (program.getParticipantIds() == null) {
+            program.setParticipantIds(new ArrayList<>());
+        }
+
+        if (program.getParticipantIds().contains(participantId)) {
+            return program;
+        }
+
+        if (program.getParticipantIds().size() >= program.getMaxParticipants()) {
+            throw new IllegalArgumentException("Training program has reached its maximum of "
+                    + program.getMaxParticipants() + " participants");
+        }
+
+        program.getParticipantIds().add(participantId);
+        return trainingProgramRepository.save(program);
+    }
+
+    // US-017: Remove a participant from a program
+    public TrainingProgram unenrollParticipant(String programId, String participantId) {
+        TrainingProgram program = getProgramById(programId);
+
+        if (program.getParticipantIds() == null || !program.getParticipantIds().remove(participantId)) {
+            throw new ResourceNotFoundException(
+                    "Participant " + participantId + " is not enrolled in program " + programId);
         }
 
         return trainingProgramRepository.save(program);
